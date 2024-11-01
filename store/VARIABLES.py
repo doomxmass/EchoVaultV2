@@ -42,7 +42,9 @@ class MainVariable:
             'colors':Colors.objects.all(),
             'sizes':Sizes.objects.all(),
             'homemessages':HomeMessages.objects.all(),
-            'show_homemessags':HomeMessages.objects.all().first().show_offer_messages if HomeMessages.objects.all() else False
+            'show_homemessags':HomeMessages.objects.all().first().show_offer_messages if HomeMessages.objects.all() else False,
+            'cartsitems':CartItems.objects.all()
+            
         }
         return data.get(dataName)
 

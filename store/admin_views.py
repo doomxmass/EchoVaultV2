@@ -14,6 +14,10 @@ def dashboard_func(req):
     all_tags = MainVariable.get_data('tags')
     all_colors = MainVariable.get_data('colors')
     all_sizes = MainVariable.get_data('sizes')
+    sales = 0
+    for i in MainVariable.get_data('cartsitems'):
+        sales += i.products.price
+
 
     #- search section -#
     if req.method == 'POST':
@@ -47,6 +51,7 @@ def dashboard_func(req):
         'users_count':MainVariable.counts('users'),
         'products_count':MainVariable.counts('products'),
         'tags_count':MainVariable.counts('tags'),
+        'sales':sales,
         'user_prog':MainVariable.counts_percentage('users'),
         'products_prog':MainVariable.counts_percentage('products'),
         'tags_prog':MainVariable.counts_percentage('tags'),

@@ -70,7 +70,7 @@ class Cart(models.Model):
 
 #---------------$ cart items model $---------------#
 class CartItems(models.Model):
-    cart = models.OneToOneField(Cart,on_delete=models.CASCADE)
+    cart = models.ForeignKey(Cart,on_delete=models.CASCADE)
     products = models.ForeignKey(Products,on_delete=models.CASCADE)
     added_on = models.DateTimeField(auto_now=True)
 
