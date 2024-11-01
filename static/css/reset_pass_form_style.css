@@ -1,0 +1,12 @@
+.my-custom-form{
+    background-color: rgb(45, 48, 53);
+    color: yellow;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+.my-custom-form:focus{
+    transition: ease-in-out .4s;
+    color: silver;
+    border: 2px solid yellow;
+}

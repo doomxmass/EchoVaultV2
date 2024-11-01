@@ -1,0 +1,468 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADMIN | DASHBOARD</title>
+    <link rel="stylesheet" href="{% static 'css/dashboard-style.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+
+<style>
+    ::-webkit-scrollbar{
+        background-color: transparent;
+        width: 10px;
+        height: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: rgb(90, 90, 90);
+        border-radius: 10px; 
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: rgb(90, 90, 90);
+    }
+    ::-webkit-scrollbar-corner{
+        background-color: transparent;
+    }
+    @media (max-width:1350px) {
+        #custom-user-table{
+            padding: 1px;
+        }
+        #user-cells{
+            padding: 1px;
+            max-width: 100px;
+            overflow: scroll;
+        }
+        #custom-products-table{
+            padding: 1px;
+        }
+        #products-cells{
+            padding: 1px;
+            max-width: 100px;
+            overflow: scroll;
+        }
+        #blacklist-cells{
+            padding: 1px;
+            max-width: 100px;
+            overflow: scroll;
+        }
+        #responsive-menu{
+            font-size: 12px;
+        }
+    }
+</style>
+
+<body>
+    
+   
+    <!--: father container :-->
+    <div class="continer-fluid pt-0 mt-0">
+        <!--: navbar :-->
+        <nav class="navbar bg-body-tertiary pt-0">
+            <div class="container-fluid pt-0 nav-responsive" style="background-color: #3D464D;">
+                <img src="{% static 'icons/dashboard.png' %}" width="80" height="60">
+                <a class="navbar-brand text-warning fw-bold">ADMIN DASHBOARD</a>
+                <div class="btn-group" role="group" aria-label="Basic outlined example">
+                    <a href="{% url 'home_page' %}" class="btn btn-outline-warning" id="responsive-menu">
+                        <i class="fa-solid fa-circle-left"></i> Go Home
+                    </a>
+                    <a href="{% url 'home_messages_page' %}" class="btn btn-outline-warning" id="responsive-menu">Add Home Messages</a>
+                    <a class="btn btn-outline-danger" id="responsive-menu" href="{% url 'blacklist_page' %}">
+                        Black List
+                    </a>
+                </div>
+                <div class="btn-group">
+                    <button id="responsive-menu" type="button" class="btn btn-warning dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
+                    Admin Menu
+                    </button>
+                    <ul class="dropdown-menu">
+                        <li><a class="dropdown-item" href="{% url 'add_user_page' %}">
+                            <i class="fa-solid fa-user-plus"></i> Add User
+                        </a></li>
+                        <li><a class="dropdown-item" href="{% url 'add_product_page' %}">
+                            <i class="fa-solid fa-box"></i> Add New Product
+                        </a></li>
+                        <li><a class="dropdown-item" href="{% url 'add_color_page' %}">
+                            <i class="fa-solid fa-palette"></i> Add Color
+                        </a></li>
+                        <li><a class="dropdown-item" href="{% url 'add_tag_page' %}">
+                            <i class="fa-solid fa-hashtag"></i> Add \ Tag
+                        </a></li>
+                        <li><a class="dropdown-item" href="{% url 'add_size_page' %}">
+                            <i class="fa-solid fa-expand"></i> Add A Size
+                        </a></li>
+                        <li><hr class="dropdown-divider"></li>
+                        <li><a class="dropdown-item bg-secondary bg-gradient" href="{% url 'admins_list_page' %}">
+                            <i class="fa-solid fa-screwdriver-wrench"></i> Admins List
+                        </a></li>
+                        <li><a class="dropdown-item bg-danger" href="{% url 'blacklist_page' %}">
+                            <i class="fa-solid fa-shield-halved"></i> Check Black List
+                        </a></li>
+                    </ul>
+                </div>
+                <form class="d-flex gap-2" role="search" method="POST">
+                    {% csrf_token %}
+                    <div class="btn-group" role="group">
+                        <button type="button" class="btn btn-warning dropdown-toggle mr-1" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="fa-solid fa-magnifying-glass"></i> Search-In
+                        </button>
+                        <ul class="dropdown-menu bg-warning p-2">
+
+                        <li class="bg-warning">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault1" value="users-search">
+                                <label class="form-check-label text-dark" for="flexRadioDefault1">
+                                    Users
+                                </label>
+                            </div>
+                        </li>
+
+                        <li class="bg-warning">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault2" value="product-search">
+                                <label class="form-check-label text-dark" for="flexRadioDefault2">
+                                    Products
+                                </label>
+                            </div>
+                        </li>
+                        
+                        <li class="bg-warning">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault4" value="tags-search">
+                                <label class="form-check-label text-dark" for="flexRadioDefault4">
+                                    Tags
+                                </label>
+                            </div>
+                        </li>
+
+                        <li class="bg-warning">
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="flexRadioDefault" id="flexRadioDefault5" value="colors-search">
+                                <label class="form-check-label text-dark" for="flexRadioDefault5">
+                                    Colors
+                                </label>
+                            </div>
+                        </li>
+
+                        </ul>
+                    </div>
+                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="search-value">
+                    <button class="btn btn-outline-warning" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+        <!--: END navbar :-->
+
+        <!--: counts :-->
+        <div class="container-fluid d-flex flex-row mt-2">
+            <div class="container">
+                <div class="container d-flex flex-column align-items-center justify-content-center">
+                    <img class="responsive-img" src="{% static 'icons/users.png' %}" width="80">
+                    <span class="fw-bold badge rounded-pill text-bg-warning">{{users_count}}</span>
+                </div>
+            </div>
+            <div class="container">
+                <div class="container d-flex flex-column align-items-center justify-content-center">
+                    <img class="responsive-img" src="{% static 'icons/products.png' %}" width="80">
+                    <span class="fw-bold badge rounded-pill text-bg-success">{{products_count}}</span>
+                </div>
+            </div>
+            <div class="container">
+                <div class="container d-flex flex-column align-items-center justify-content-center">
+                    <img class="responsive-img" src="{% static 'icons/tags.png' %}" width="80">
+                    <span class="fw-bold badge rounded-pill text-bg-primary">{{tags_count}}</span>
+                </div>
+            </div>
+            <div class="container">
+                <div class="container d-flex flex-column align-items-center justify-content-center">
+                    <img class="responsive-img" src="{% static 'icons/sales.png' %}" width="80">
+                    <span class="fw-bold badge rounded-pill text-bg-secondary">40</span>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <!--: END counts :-->
+
+
+        <!--: progress father container :-->
+        <div class="container-fluid mt-2 responsive-prog">
+            <!-- progress container -->
+            <div class="container custom-prog-div">
+                <div class="container text-center">
+                    <p class="text-secondary">
+                        Details Of App's Items
+                    </p>
+                </div>
+                <div class="progress mt-4" role="progressbar" aria-label="Success example" aria-valuemin="0" aria-valuemax="100">
+                    <span class="fw-bold text-users">Users</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="progress-bar" id="yellow-prog" style="width: {{user_prog}}%">{{user_prog}}%</div>
+                </div>
+                <div class="progress mt-4" role="progressbar" aria-label="Info example" aria-valuemin="0" aria-valuemax="100">
+                    <span class="fw-bold text-products">Products</span> &nbsp;&nbsp;&nbsp;
+                    <div class="progress-bar" id="green-prog" style="width: {{products_prog}}%">{{products_prog}}%</div>
+                </div>
+                <div class="progress mt-4" role="progressbar" aria-label="Warning example" aria-valuemin="0" aria-valuemax="100">
+                    <span class="fw-bold text-tags">Tags</span> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="progress-bar" id="blue-prog" style="width: {{tags_prog}}%">{{tags_prog}}%</div>
+                </div>
+                <div class="progress mt-4" role="progressbar" aria-label="Danger example" aria-valuemin="0" aria-valuemax="100">
+                    <span class="fw-bold text-list">Blacklist</span> &nbsp;&nbsp;&nbsp;&nbsp;
+                    <div class="progress-bar" id="red-prog" style="width: {{blacklist_prog}}%">{{blacklist_prog}}%</div>
+                </div>
+            </div>
+            <!-- description container -->
+            <div class="container custom-prog-div d-flex align-items-center justify-content-center">
+                <div class="card" style="border: none;">
+                    <div class="card-body descrip-card">
+                      Lorem ipsum dolor sit amet consectetur, adipisicing elit. Eveniet repellat magni suscipit consectetur aspernatur accusantium a ut perspiciatis minima voluptate animi ea earum recusandae porro laborum molestiae quibusdam, nulla cum!
+                      Lorem ipsum dolor sit amet consectetur adipisicing elit. Delectus quae quo quas tempora alias, unde amet officia eveniet deleniti at deserunt ratione fugiat? Minima, modi. Facilis ratione asperiores quos consectetur?
+                      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Architecto expedita magnam, laboriosam autem tempore possimus quisquam saepe quo quia hic libero, porro dolor accusamus itaque corporis eum deserunt ipsum rerum.
+                      Lorem ipsum dolor sit, amet consectetur adipisicing elit. Architecto vel corporis dicta. Sequi neque saepe perferendis quidem iure ducimus iste, vel quod, minus, corporis enim doloribus. Amet aliquid eligendi iste.
+                    </div>
+                  </div>
+            </div>
+        </div>
+        <hr>
+        <!--: END progress father container :-->
+
+
+        <!--: tables users and products container :-->
+        <div class="container-s p-5 pb-0 pt-1 responsive-tables mt-1">
+
+            <div class="container-fluid d-flex flex-column align-items-center justify-content-center p-0 mt-2">
+                <div class="container">
+                    <p class="text-users text-center">Users <i class="fa-solid fa-users"></i></p>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col" class="left-radius-table" id="custom-user-table">ID</th>
+                        <th scope="col" id="custom-user-table">Username</th>
+                        <th scope="col" id="custom-user-table">Email</th>
+                        <th scope="col" id="custom-user-table">Joined at</th>
+                        <th scope="col" id="custom-user-table">Show</th>
+                        <th scope="col" class="right-radius-table" id="custom-user-table">Remove</th>
+                        </tr>
+                    </thead>
+                    {% for user in all_users %}
+                    <tbody>
+                        <tr>
+                        <th scope="row" id="user-cells" style="padding: 1px;">{{user.id}}</th>
+                        <td id="user-cells" style="padding: 1px;">
+                            {{user.username}}
+                        </td>
+                        <td id="user-cells" style="padding: 1px;">
+                            {{user.email}}
+                        </td>
+                        <td id="user-cells" style="padding: 1px;">{{user.date_joined|date}}</td>
+                        <td id="user-cells" style="padding: 1px;">
+                            <a href="" class="text-users"><i class="fa-solid fa-eye"></i></a>
+                        </td>
+                        <td id="user-cells" style="padding: 1px;">
+                            {% if not user.is_staff %}
+                            <a href="{% url 'main_remove_link' 'User' user.id 'dashboard_page' user.username %}" class="text-secondary">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                            {% endif %}
+                        </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+            
+            {% comment %} -------------------------------------------------- {% endcomment %}
+            
+            <div class="container-fluid d-flex flex-column align-items-center justify-content-center p-0 mt-2">
+                <div class="container">
+                    <p class="text-products text-center">Products <i class="fa-brands fa-product-hunt"></i></p>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col" class="left-radius-table" id="custom-products-table">ID</th>
+                        <th scope="col" id="custom-products-table">Name</th>
+                        <th scope="col" id="custom-products-table">Price</th>
+                        <th scope="col" id="custom-products-table">Category</th>
+                        <th scope="col" id="custom-products-table">at</th>
+                        <th scope="col" id="custom-products-table">Show</th>
+                        <th scope="col" class="right-radius-table" id="custom-products-table">Action</th>
+                        </tr>
+                    </thead>
+                    {% for product in all_products %}
+                    <tbody>
+                        <tr>
+                        <td id="products-cells">{{product.id}}</td>
+                        <td id="products-cells">
+                            {{product.name}}
+                        </td>
+                        <td id="products-cells">{{product.price}}$</td>
+                        <td id="products-cells">
+                            {{product.category}}
+                        </td>
+                        <td id="products-cells">{{product.published_at}}</td>
+                        <td id="products-cells">
+                            <a href="{% url 'product_details_page' product.id %}" class="text-products"><i class="fa-solid fa-eye"></i></a>
+                        </td>
+                        <td id="products-cells">
+                            <a href="{% url 'edit_product_page' product.id 'dashboard' %}" class="text-secondary">
+                                <i class="fa-solid fa-pen-to-square"></i>
+                            </a>
+                            <a href="{% url 'main_remove_link' 'Products' product.id 'dashboard_page' product.name %}" class="text-secondary">
+                                <i class="fa-solid fa-trash"></i>
+                            </a>
+                        </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+            
+        </div>
+        <!--: END tables users and products container :-->
+
+        <!--: tables blacklist and tags container :-->
+        <div class="container-fluid p-5 pb-0 pt-1 responsive-tables mt-1">
+
+            
+            <div class="container-fluid d-flex flex-column align-items-center justify-content-center p-0 mt-2">
+                <div class="container">
+                    <p class="text-list text-center">Black list <i class="fa-solid fa-address-book"></i></p>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col" class="left-radius-table" id="custom-blacklist-table">ID</th>
+                        <th scope="col" id="custom-blacklist-table">Username</th>
+                        <th scope="col" id="custom-blacklist-table">Email</th>
+                        <th scope="col" id="custom-blacklist-table">at</th>
+                        <th scope="col" class="right-radius-table" id="custom-blacklist-table">Remove</th>
+                        </tr>
+                    </thead>
+                    {% for blocked in blacklist_info %}
+                    <tbody>
+                        <tr>
+                        <th scope="row" style="padding: 1px;" id="blacklist-cells">{{blocked.user.id}}</th>
+                        <td style="padding: 1px;" id="blacklist-cells">
+                            {{blocked.user.username}}
+                        </td>
+                        <td style="padding: 1px;" id="blacklist-cells">
+                            {{blocked.user.email}}
+                        </td>
+                        <td style="padding: 1px;" id="blacklist-cells">{{blocked.blocked_at}}</td>
+                        <td style="padding: 1px;" id="blacklist-cells">
+                            <a href="{% url 'remove_blacklist' blocked.user.id 'dashboard' %}" class="text-list"><i class="fa-solid fa-eraser"></i></a>
+                        </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+            
+            {% comment %} ------------------------------------------------- {% endcomment %}
+            
+            <div class="container-fluid d-flex flex-column align-items-center justify-content-center p-0 mt-2">
+                <div class="container">
+                    <p class="text-tags text-center">Tags <i class="fa-solid fa-tags"></i></p>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col" class="left-radius-table" id="custom-tags-table">Name</th>
+                        <th scope="col" id="custom-tags-table">Added at</th>
+                        <th scope="col" class="right-radius-table" id="custom-tags-table">Remove</th>
+                        </tr>
+                    </thead>
+                    {% for tag in all_tags %}
+                    <tbody>
+                        <tr>
+                        <th scope="row" id="tags-cells">{{tag.tag}}</th>
+                        <td id="tags-cells">{{tag.added_at}}</td>
+                        <td id="tags-cells">
+                            <a href="{% url 'main_remove_link' 'Tags' tag.id 'dashboard_page' tag.tag %}" class="text-tag"><i class="fa-solid fa-eraser"></i></a>
+                        </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+
+        </div>
+        <!--: END tables blacklist and tags container :-->
+
+        <!--: END tables colors and sizes container :-->
+        <div class="container-fluid p-5 pb-0 pt-1 responsive-tables mt-1">
+
+            
+            <div class="container-fluid d-flex flex-column align-items-center justify-content-center p-0 mt-2">
+                <div class="container">
+                    <p class="text-colors text-center">Colors <i class="fa-solid fa-palette"></i></p>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col" class="left-radius-table" id="custom-colors-table">Nmae</th>
+                        <th scope="col" id="custom-colors-table">Added at</th>
+                        <th scope="col" class="right-radius-table" id="custom-colors-table">Remove</th>
+                        </tr>
+                    </thead>
+                    {% for color in all_colors %}
+                    <tbody>
+                        <tr>
+                        <th scope="row" id="colors-cells">{{color.color}}</th>
+                        <td id="colors-cells">{{color.added_at}}</td>
+                        <td id="colors-cells">
+                            <a href="{% url 'main_remove_link' 'Colors' color.id 'dashboard_page' color.color %}" class="text-colors">
+                                <i class="fa-solid fa-eraser"></i>
+                            </a>
+                        </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+            
+            {% comment %} ---------------------------------------------- {% endcomment %}
+            
+            <div class="container-fluid d-flex flex-column align-items-center justify-content-center p-0 mt-2">
+                <div class="container">
+                    <p class="text-sizes text-center">Sizes <i class="fa-solid fa-face-meh-blank"></i></p>
+                </div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                        <th scope="col" class="left-radius-table" id="custom-sizes-table">Size</th>
+                        <th scope="col" id="custom-sizes-table">Added at</th>
+                        <th scope="col" class="right-radius-table" id="custom-sizes-table">Remove</th>
+                        </tr>
+                    </thead>
+                    {% for size in all_sizes %}
+                    <tbody>
+                        <tr>
+                        <th scope="row" id="sizes-cells">{{size.size}}</th>
+                        <td id="sizes-cells">{{size.added_at}}</td>
+                        <td id="sizes-cells">
+                            <a href="{% url 'main_remove_link' 'Sizes' size.id 'dashboard_page' size.size %}" class="text-sizes">
+                                <i class="fa-solid fa-eraser"></i>
+                            </a>
+                        </td>
+                        </tr>
+                    </tbody>
+                    {% endfor %}
+                </table>
+            </div>
+            
+        </div>
+        <!--: END tables colors and sizes container :-->
+
+    </div>
+    <!--: END father ontainer :-->
+
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

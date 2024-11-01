@@ -1,0 +1,166 @@
+
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ADD NEW USER</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+</head>
+<body>
+
+    <style>
+        
+    ::-webkit-scrollbar{
+        background-color: transparent;
+        width: 10px;
+        height: 10px;
+    }
+    ::-webkit-scrollbar-thumb {
+        background-color: rgb(90, 90, 90);
+        border-radius: 10px; 
+    }
+    
+    ::-webkit-scrollbar-thumb:hover {
+        background-color: rgb(90, 90, 90);
+    }
+    ::-webkit-scrollbar-corner{
+        background-color: transparent;
+    }
+    .input-box{
+        background-color: rgb(64, 64, 68);
+        padding: 10px;
+        border: 2px solid rgb(211, 214, 48);
+        border-radius: 12px;
+        color: silver;
+    }
+    #custom-products-table{
+        background-color: rgb(30, 218, 71);
+        text-align: center;
+        border-bottom: .5px solid rgb(30, 218, 71);
+    }
+    #products-cells{
+        background-color: rgb(66, 66, 66);
+        border: .5px solid rgb(30, 218, 71);
+        color: rgb(112, 110, 110);
+        text-align: center;
+        padding: 1px;
+    }
+    .text-products{
+        color: rgb(30, 218, 71);
+        font-weight: bold;
+    }
+
+    .left-radius-table{
+        border-top-left-radius: 12px;
+    }
+    
+    .right-radius-table{
+        border-top-right-radius: 12px;
+    }
+    </style>
+
+    <div class="container mt-5 mb-5">
+
+
+        {% if success_message %}
+        <div class="alert alert-success" role="alert">
+            {{success_message}}
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+        {% elif messages %}
+        {% for msg in messages %}
+        <div class="alert alert-success" role="alert">
+            {{msg}}
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+        {% endfor %}
+        {% endif %}
+
+
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="container p-4 d-flex gap-3 flex-column justify-content-center">
+
+                {{ addproduct_form.tags }}
+                <span class="text-danger">{{ addproduct_form.tags.errors }}</span>
+                {{ addproduct_form.colors }}
+                <span class="text-danger">{{ addproduct_form.colors.errors }}</span>
+                {{ addproduct_form.sizes }}
+                <span class="text-danger">{{ addproduct_form.sizes.errors }}</span>
+                {{ addproduct_form.name }}
+                <span class="text-danger">{{ addproduct_form.name.errors }}</span>
+                {{ addproduct_form.bio }}
+                <span class="text-danger">{{ addproduct_form.bio.errors }}</span>
+                {{ addproduct_form.price }}
+                <span class="text-danger">{{ addproduct_form.price.errors }}</span>
+                {{ addproduct_form.category }}
+                <span class="text-danger">{{ addproduct_form.category.errors }}</span>
+                {{ addproduct_form.image }}
+                <span class="text-danger">{{ addproduct_form.image.errors }}</span>
+                {{ addproduct_form.rate }}
+                <span class="text-danger">{{ addproduct_form.rate.errors }}</span>
+
+                <div class="text-center">
+                    <a href="{% url 'dashboard_page' %}" class="btn btn-primary fw-bold text-light">Cancel</a>
+                    <input type="submit" class="btn btn-success fw-bold text-light" value="Add" />
+                </div>
+            </div>
+        </form>
+
+        
+        {% comment %}- table -{% endcomment %}
+        <div class="container-fluid d-flex flex-column align-items-center justify-content-center p-0 mt-2">
+            <div class="container">
+                <p class="text-products text-center">Products <i class="fa-brands fa-product-hunt"></i></p>
+            </div>
+            <table class="table">
+                <thead>
+                    <tr>
+                    <th scope="col" class="left-radius-table" id="custom-products-table">ID</th>
+                    <th scope="col" id="custom-products-table">Name</th>
+                    <th scope="col" id="custom-products-table">Price</th>
+                    <th scope="col" id="custom-products-table">Category</th>
+                    <th scope="col" id="custom-products-table">at</th>
+                    <th scope="col" id="custom-products-table">Show</th>
+                    <th scope="col" class="right-radius-table" id="custom-products-table">Action</th>
+                    </tr>
+                </thead>
+                {% for product in all_products %}
+                <tbody>
+                    <tr>
+                    <td id="products-cells">{{product.id}}</td>
+                    <td id="products-cells">
+                        {{product.name}}
+                    </td>
+                    <td id="products-cells">{{product.price}}$</td>
+                    <td id="products-cells">
+                        {{product.category}}
+                    </td>
+                    <td id="products-cells">{{product.published_at}}</td>
+                    <td id="products-cells">
+                        <a href="{% url 'product_details_page' product.id %}" class="text-products"><i class="fa-solid fa-eye"></i></a>
+                    </td>
+                    <td id="products-cells">
+                        <a href="{% url 'edit_product_page' product.id 'add product' %}" class="text-secondary">
+                            <i class="fa-solid fa-pen-to-square"></i>
+                        </a>
+                        <a href="{% url 'main_remove_link' 'Products' product.id 'add_product_page' product.name %}" class="text-secondary">
+                            <i class="fa-solid fa-trash"></i>
+                        </a>
+                    </td>
+                    </tr>
+                </tbody>
+                {% endfor %}
+            </table>
+        </div>
+        {% comment %}- END table -{% endcomment %}
+    
+
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+</body>
+</html>

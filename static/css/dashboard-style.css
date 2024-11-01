@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@100..900&display=swap');
+
+*{
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+    font-family: "Roboto Slab", serif;
+    font-optical-sizing: auto;
+    font-weight: weight;
+    font-style: normal; 
+}
+
+
+
+.custom-prog-div{
+    border-radius: 25px;
+    padding: 20px;
+}
+
+.left-radius-table{
+    border-top-left-radius: 12px;
+}
+
+.right-radius-table{
+    border-top-right-radius: 12px;
+}
+
+#custom-user-table{
+    background-color: rgb(218, 183, 30);
+    text-align: center;
+    border-bottom: .5px solid rgb(218, 183, 30);
+}
+
+#user-cells{
+    background-color: rgb(66, 66, 66);
+    border: .5px solid rgb(218, 183, 30);
+    color: rgb(112, 110, 110);
+    text-align: center;
+    padding: 1px;
+}
+.text-users{
+    color: rgb(218, 183, 30);
+    font-weight: bold;
+}
+#custom-products-table{
+    background-color: rgb(30, 218, 71);
+    text-align: center;
+    border-bottom: .5px solid rgb(30, 218, 71);
+}
+#products-cells{
+    background-color: rgb(66, 66, 66);
+    border: .5px solid rgb(30, 218, 71);
+    color: rgb(112, 110, 110);
+    text-align: center;
+    padding: 1px;
+}
+.text-products{
+    color: rgb(30, 218, 71);
+    font-weight: bold;
+}
+#custom-blacklist-table{
+    background-color: rgb(218, 30, 61);
+    text-align: center;
+    border-bottom: .5px solid rgb(218, 30, 61);
+}
+#blacklist-cells{
+    background-color: rgb(66, 66, 66);
+    border: .5px solid rgb(218, 30, 61);
+    color: rgb(112, 110, 110);
+    text-align: center;
+    padding: 1px;
+}
+.text-list{
+    color: rgb(218, 30, 61);
+    font-weight: bold;
+}
+#custom-tags-table{
+    background-color: rgb(30, 143, 218);
+    text-align: center;
+    border-bottom: .5px solid rgb(30, 143, 218);
+}
+#tags-cells{
+    background-color: rgb(66, 66, 66);
+    border: .5px solid rgb(30, 143, 218);
+    color: rgb(112, 110, 110);
+    text-align: center;
+    padding: 1px;
+}
+.text-tags{
+    color: rgb(30, 143, 218);
+    font-weight: bold;
+}
+#custom-colors-table{
+    background-color: rgb(218, 30, 193);
+    text-align: center;
+    border-bottom: .5px solid rgb(218, 30, 193);
+}
+#colors-cells{
+    background-color: rgb(66, 66, 66);
+    border: .5px solid rgb(218, 30, 193);
+    color: rgb(112, 110, 110);
+    text-align: center;
+    padding: 1px;
+}
+.text-colors{
+    color: rgb(218, 30, 193);
+    font-weight: bold;
+}
+#custom-sizes-table{
+    background-color: rgb(30, 218, 187);
+    text-align: center;
+    border-bottom: .5px solid rgb(30, 218, 187);
+}
+#sizes-cells{
+    background-color: rgb(66, 66, 66);
+    border: .5px solid rgb(30, 218, 187);
+    color: rgb(112, 110, 110);
+    text-align: center;
+    padding: 1px;
+}
+.text-sizes{
+    color: rgb(30, 218, 187);
+    font-weight: bold;
+}
+
+.descrip-card{
+    box-shadow: 0 0 22px #0000009d;
+    border-radius: 25px;
+}
+
+
+#yellow-prog{
+    background: linear-gradient(to right, rgb(161, 161, 28), rgb(255, 238, 1));
+    border-top-right-radius: 12px;
+}
+#green-prog{
+    background: linear-gradient(to right, rgb(5, 163, 39), rgb(0, 236, 138));
+    border-top-right-radius: 12px;
+}
+#blue-prog{
+    background: linear-gradient(to right, rgb(33, 113, 167), rgb(0, 189, 236));
+    border-top-right-radius: 12px;
+}
+#red-prog{
+    background: linear-gradient(to right, rgb(199, 28, 56), rgb(236, 0, 118));
+    border-top-right-radius: 12px;
+}
+
+.responsive-prog{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+}
+
+.responsive-tables{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2rem;
+}
+
+
+
+
+  /* responsive */
+
+  @media (max-width:1350px) {
+    .nav-responsive{
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+        align-items: center;
+        justify-content: center;
+        padding: 5px;
+    }
+    .responsive-img{
+        width: 80%;
+    }
+    .responsive-prog{
+        flex-direction: column;
+    }
+    .responsive-tables{
+        flex-direction: column;
+    }
+  }
