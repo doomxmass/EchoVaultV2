@@ -1,7 +1,5 @@
 from django.conf import settings
 import requests as REQ
-from django.contrib.auth import login
-from threading import Thread
 
 #- checke recaptcha -#
 def check_recaptcha(request):

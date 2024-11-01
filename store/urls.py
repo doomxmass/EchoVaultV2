@@ -12,7 +12,11 @@ urlpatterns = [
     #---------------$ login signup sectio $---------------#
     #- social login check blacklist -#
     path('sociallogin/', signup_login_logout_views.sociallogin_check, name='sociallogin_page'),
-    path('accounts/3rdparty/signup/', signup_login_logout_views.sociallogin_signup, name='exist_email_page'),
+    #- social check if social email exists -#
+    #> link should be same this link to force scoial login redirect<#
+    #> to our custom page and block it go to signup base social signup page <#
+    path('accounts/3rdparty/signup/',
+        signup_login_logout_views.sociallogin_signup, name='exist_email_page'),
     #- login url -#
     path('accounts/login/', signup_login_logout_views.login_func, name='login_page'),
     #- register url -#
@@ -25,8 +29,10 @@ urlpatterns = [
     #: my custom reset password pages :#
     path('password/reset', CustomPasswordResetView.as_view(), name='password_reset'),
     path('reset/done/', CustomPasswordResetDoneView.as_view(), name='password_reset_done'),
-    path('reset/<str:uidb64>/<str:token>/', CustomPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
-    path('reset/complete/', CustomPasswordResetCompleteView.as_view(), name='password_reset_complete'),
+    path('reset/<str:uidb64>/<str:token>/',
+        CustomPasswordResetConfirmView.as_view(), name='password_reset_confirm'),
+    path('reset/complete/',
+        CustomPasswordResetCompleteView.as_view(), name='password_reset_complete'),
     #> after this dont forget to go to admin dashboard and in sites section change example.com to localhost:8000 <#
     #---------------$ ADMIN DASHBOARD link [admin] $---------------#
     #- dashboard link -#
@@ -53,7 +59,8 @@ urlpatterns = [
     path('product/details/<str:product_id>',
          admin_views.product_details_func, name='product_details_page'),
     #- edit product link -#
-    path('edit-product/<str:product_id>/<str:page_name>/', admin_views.edit_product_func, name='edit_product_page'),
+    path('edit-product/<str:product_id>/<str:page_name>/',
+        admin_views.edit_product_func, name='edit_product_page'),
     #---------------$ tags [admin] $---------------#
     #- add tag link -#
     path('add-tag/', admin_views.add_tag_func, name='add_tag_page'),

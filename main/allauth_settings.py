@@ -20,7 +20,6 @@ ALLUTH_INSTALLED_APPS = [
     # 'allauth.socialaccount.providers.google',
 ]
 
-
 ALLAUTH_MIDDLEWARE = [
     # Add the account middleware:
     "allauth.account.middleware.AccountMiddleware",
