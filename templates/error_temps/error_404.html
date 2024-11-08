@@ -1,0 +1,104 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <style>
+        body {
+            background-color: rgb(54, 58, 65);
+            border: none;
+          }
+          
+          .mainbox {
+            background-color: transparent;
+            margin: auto;
+            height: 600px;
+            width: 600px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+          }
+          
+            .err {
+              color: rgb(210, 235, 66);
+              font-family: 'Nunito Sans', sans-serif;
+              font-size: 11rem;
+              position:absolute;
+              left: 20%;
+              top: 8%;
+            }
+          
+          .far {
+            position: absolute;
+            font-size: 8.5rem;
+            left: 42%;
+            top: 15%;
+            color: rgb(210, 235, 66);
+          }
+          
+           .err2 {
+              color: rgb(210, 235, 66);
+              font-family: 'Nunito Sans', sans-serif;
+              font-size: 11rem;
+              position:absolute;
+              left: 68%;
+              top: 8%;
+            }
+          
+          .msg {
+              text-align: center;
+              font-family: 'Nunito Sans', sans-serif;
+              font-size: 1.6rem;
+              position:absolute;
+              left: 16%;
+              top: 45%;
+              width: 75%;
+            }
+          
+          a {
+            text-decoration: none;
+            color: white;
+          }
+          
+          a:hover {
+            text-decoration: underline;
+          }
+          .c-home{
+            background-color: rgb(210, 235, 66);
+            padding: 5px;
+            border-radius: 15px;
+            color: rgb(54, 58, 65);
+            font-weight: bold;
+            text-decoration: none;
+          }
+          @media (max-width:1000px) {
+            .mainbox{
+                max-width: 100%;
+            }
+          }
+    </style>
+    <head>
+    <link href="https://fonts.googleapis.com/css2?family=Nunito+Sans:wght@600;900&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/4b9ba14b0f.js" crossorigin="anonymous"></script>
+  </head>
+  <body>
+    <div class="mainbox">
+        <div class="err">4</div>
+        <i class="far fa-question-circle fa-spin"></i>
+        <div class="err2">4</div>
+        <div class="msg">
+            Page Not Found!
+            <p>Go Back <a href="{% url 'home_page' %}" class="c-home"> Home Page</a></p>
+        </div>
+    </div>
+</body>
+</html>
+
+
+
+

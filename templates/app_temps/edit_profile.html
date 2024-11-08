@@ -1,0 +1,51 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load i18n %}
+
+{% block content %}
+
+<style>
+    .input-box{
+        border-radius: 12px;
+        padding: 5px;
+        border: 1px solid #57575756;
+    }
+    .c-btn{
+        border: none;
+        border-radius: 12px;
+    }
+</style>
+
+<div class="container d-flex flex-column align-item-center justify-content-center">
+    <form class="container d-flex flex-column align-item-center justify-content-center" 
+    method="POST" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{form.nickname}}
+        <span class="tetxt-danger">{{form.nickname.errors}}</span>
+        <br>
+        {{form.bio}}
+        <span class="tetxt-danger">{{form.bio.errors}}</span>
+        <br>
+        {{form.phone}}
+        <span class="tetxt-danger">{{form.phone.errors}}</span>
+        <br>
+        {{form.country}}
+        <span class="tetxt-danger">{{form.country.errors}}</span>
+        <br>
+        {{form.city}}
+        <span class="tetxt-danger">{{form.city.errors}}</span>
+        <br>
+        <img src="{{image}}" width="150">
+        <div class="container-s" style="overflow-x:hidden;">
+            {{form.image}}
+        </div>
+        <span class="tetxt-danger">{{form.image.errors}}</span>
+        <br>
+        <div class="container text-center">
+            <input name="profile-form" class="bg-warning p-2 c-btn" type="submit" value="{% trans "Save" %}">
+        </div>
+    </form>
+</div>
+
+
+{% endblock content %}

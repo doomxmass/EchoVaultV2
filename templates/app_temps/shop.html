@@ -1,0 +1,279 @@
+{% extends 'base/base.html' %}
+{% load static %}
+{% load i18n %}
+
+
+{% block content %}
+
+<style>
+    .custom-list:hover{
+        background-color: yellow;
+    }
+    @media (max-width:1000px) {
+        .custom-img{
+            min-width: 96%;
+            min-height: 500px;
+        }
+    }
+</style>
+
+
+    <!-- Shop Start -->
+    <div class="container-fluid">
+        <div class="row px-xl-5">
+            <!-- Shop Sidebar Start -->
+            <div class="col-lg-3 col-md-4">
+
+                {% comment %}- filters checkbox section -{% endcomment %}
+                <!-- Price Start -->
+                <form method="POST"  id="myForm">
+                    {% csrf_token %}
+                    <input type="submit" class="btn btn-warning mb-4" value="Filter">
+                    <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">
+                        {% trans "Filter by price" %}
+                    </span></h5>
+                    <div class="bg-light p-4 mb-30">
+                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                <input type="checkbox" name="price-range" value="10000" class="custom-control-input" id="price-all" checked onclick="onlyOnePrice(this)">
+                                <label class="custom-control-label" for="price-all">{% trans "All Prices" %}</label>
+                                <span class="badge border font-weight-normal">1000</span>
+                            </div>
+                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                <input type="checkbox" name="price-range" value="100" class="custom-control-input" id="price-1" onclick="onlyOnePrice(this)">
+                                <label class="custom-control-label" for="price-1">- $100</label>
+                                <span class="badge border font-weight-normal">150</span>
+                            </div>
+                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                <input type="checkbox" name="price-range" value="200" class="custom-control-input" id="price-2" onclick="onlyOnePrice(this)">
+                                <label class="custom-control-label" for="price-2">- $200</label>
+                                <span class="badge border font-weight-normal">295</span>
+                            </div>
+                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                <input type="checkbox" name="price-range" value="300" class="custom-control-input" id="price-3" onclick="onlyOnePrice(this)">
+                                <label class="custom-control-label" for="price-3">- $300</label>
+                                <span class="badge border font-weight-normal">246</span>
+                            </div>
+                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                <input type="checkbox" name="price-range" value="400"  class="custom-control-input" id="price-4" onclick="onlyOnePrice(this)">
+                                <label class="custom-control-label" for="price-4">- $400</label>
+                                <span class="badge border font-weight-normal">145</span>
+                            </div>
+                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between">
+                                <input type="checkbox" name="price-range" value="500"  class="custom-control-input" id="price-5" onclick="onlyOnePrice(this)">
+                                <label class="custom-control-label" for="price-5">- $500</label>
+                                <span class="badge border font-weight-normal">168</span>
+                            </div>
+                    </div>
+                    <!-- Price End -->
+                    
+                    <!-- Color Start -->
+                    <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">
+                        {% trans "Filter by color" %}
+                    </span></h5>
+                    <div class="bg-light p-4 mb-30">
+                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                <input type="checkbox" name="color-type" value="all" class="custom-control-input" id="color-all" checked onclick="onlyOneColor(this)">
+                                <label class="custom-control-label" for="color-all">{% trans "All Color" %}</label>
+                                <span class="badge border font-weight-normal">{{all_colors.count}}</span>
+                            </div>
+                            {% for color in all_colors %}
+                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                <input type="checkbox" name="color-type" value="{{color.color}}" class="custom-control-input" id="color-{{color.id}}" onclick="onlyOneColor(this)">
+                                <label class="custom-control-label" for="color-{{color.id}}">{{color.color}}</label>
+                                {% if color.color == 'white' %}
+                                <span class="badge border font-weight-normal text-dark p-1" style="background:silver;border-radius:12px;">
+                                    {{color.color}}
+                                </span>
+                                {% else %}
+                                <span class="badge border font-weight-normal text-light p-1" style="background:{{color.color}};border-radius:12px;">
+                                    {{color.color}}
+                                </span>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                    </div>
+                    <!-- Color End -->
+
+                    <!-- Size Start -->
+                    <h5 class="section-title position-relative text-uppercase mb-3"><span class="bg-secondary pr-3">
+                        {% trans "Filter by size" %}
+                    </span></h5>
+                    <div class="bg-light p-4 mb-30">
+                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                <input type="checkbox" name="size-type" value="all" class="custom-control-input" checked id="size-all" onclick="onlyOneSize(this)">
+                                <label class="custom-control-label" for="size-all">{% trans "All Size" %}</label>
+                                <span class="badge border font-weight-normal">{{all_sizes.count}}</span>
+                            </div>
+                            {% for size in all_sizes %}
+                            <div class="custom-control custom-checkbox d-flex align-items-center justify-content-between mb-3">
+                                <input type="checkbox" name="size-type" value="{{size.size}}" class="custom-control-input" id="size-{{size.id}}" onclick="onlyOneSize(this)">
+                                <label class="custom-control-label" for="size-{{size.id}}">{{size.size}}</label>
+                                <span class="badge border font-weight-normal">150</span>
+                            </div>
+                            {% endfor %}
+                    </div>
+                    <!-- Size End -->
+                </form>
+                {% comment %}- END filters checkbox section -{% endcomment %}
+
+
+            </div>
+            <!-- Shop Sidebar End -->
+
+
+            <!-- Shop Product Start -->
+            <div class="col-lg-9 col-md-8">
+                <div class="row pb-3">
+                    <div class="col-12 pb-1">
+                        <div class="d-flex align-items-center justify-content-between mb-4">
+                            <div>
+                                <button class="btn btn-sm btn-light"><i class="fa fa-th-large"></i></button>
+                                    <button class="btn btn-sm bg-warning text-dark ml-2" disabled style="border-radius:50%;">
+                                        {{products_count}}
+                                    </button>
+                            </div>
+                            <div class="ml-2">
+                                <div class="btn-group ml-2">
+                                    <button type="button" class="btn btn-sm btn-light dropdown-toggle" data-toggle="dropdown">Showing</button>
+                                    <div class="dropdown-menu dropdown-menu-right">
+                                        <form method="GET">
+                                            <a class="dropdown-item custom-list" 
+                                            href="?model=all">All</a>
+
+                                            <a class="dropdown-item custom-list" 
+                                            href="?model=formal">Formal Suits</a>
+
+                                            <a class="dropdown-item custom-list" 
+                                            href="?model=business">Business Casual Suits</a>
+
+                                            <a class="dropdown-item custom-list" 
+                                            href="?model=lounge">Lounge Suits</a>
+
+                                            <a class="dropdown-item custom-list" 
+                                            href="?model=tuxedos">Tuxedos</a>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {% comment %}- products section -{% endcomment %}
+                    {% for product in all_products %}
+                    <div class="col-lg-4 col-md-6 col-sm-6 pb-1">
+                        <div class="product-item bg-light text-center mb-4">
+                            <div class="product-img position-relative overflow-hidden">
+                                <img class="img-fluid custom-img" src="{{product.image.url}}"  style="max-width:200px;height:300px;">
+                                <div class="product-action">
+                                    <a class="btn btn-outline-dark btn-square"
+                                    href="{% url 'product_info_page' product.id %}">
+                                        <i class="fa fa-shopping-cart"></i>
+                                    </a>
+                                </div>
+                            </div>
+                            <div class="text-center py-4">
+                                <a class="h6 text-decoration-none text-truncate"
+                                href="{% url 'product_info_page' product.id %}">
+                                    {{product.name}}
+                                </a>
+                                <div class="d-flex align-items-center justify-content-center mt-2">
+                                    <h5>{{product.price}}$</h5>
+                                    <h6 class="text-muted ml-2"><del>$123.00</del></h6>
+                                </div>
+                                <div class="d-flex align-items-center justify-content-center mb-1">
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small class="fa fa-star text-primary mr-1"></small>
+                                    <small>rating (99)</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% empty %}
+                    <div class="container text-center">
+                        <h5 class="text-warning mt-5">{% trans "There is no result with this FILTERS." %}</h5>
+                        <img src="{% static 'icons/empty.png' %}" width="20%">
+                    </div>
+                    {% endfor %}
+                    {% comment %}- END products section -{% endcomment %}
+                    
+
+                    {% comment %}- pagination section -{% endcomment %}
+                    {% if all_products %}
+                    <div class="col-12">
+                        <nav>
+                          <ul class="pagination justify-content-center">
+                            {% if all_products.has_previous %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ all_products.previous_page_number }}">
+                                {% trans "Previous" %}
+                                </a>
+                            </li>
+                            {% endif %}
+                            
+                            {% for numb in all_products.paginator.page_range %}
+                                {% if all_products.number == numb %}
+                                    <li class="page-item active"><a class="page-link" href="#">{{numb}}</a></li>
+                                {% else %}
+                                    <li class="page-item">
+                                        <a class="page-link" href="?page={{numb}}">{{numb}}</a>
+                                    </li>
+                                {% endif %}
+                            {% endfor %}
+
+                            {% if all_products.has_next %}
+                            <li class="page-item">
+                                <a class="page-link" href="?page={{ all_products.next_page_number }}">
+                                {% trans "Next" %}
+                                </a>
+                            </li>
+                            {% endif %}
+                          </ul>
+                        </nav>
+                    </div>
+                    {% endif %}
+                    {% comment %}- END pagination section -{% endcomment %}
+
+
+                </div>
+            </div>
+            <!-- Shop Product End -->
+        </div>
+    </div>
+    <!-- Shop End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-primary back-to-top"><i class="fa fa-angle-double-up"></i></a>
+    
+    {% comment %}- script to make checkbox like radiobuttons can check just one -{% endcomment %}
+    <script>
+        {% comment %} - prices - {% endcomment %}
+        function onlyOnePrice(selectedCheckbox) {
+            const checkboxes = document.getElementsByName('price-range');
+            
+            checkboxes.forEach((checkbox) => {
+                checkbox.checked = checkbox === selectedCheckbox;
+            });
+        }
+        {% comment %} - colors - {% endcomment %}
+        function onlyOneColor(selectedCheckbox) {
+            const checkboxes = document.getElementsByName('color-type');
+            
+            checkboxes.forEach((checkbox) => {
+                checkbox.checked = checkbox === selectedCheckbox;
+            });
+        }
+        {% comment %} - sizes - {% endcomment %}
+        function onlyOneSize(selectedCheckbox) {
+            const checkboxes = document.getElementsByName('size-type');
+            
+            checkboxes.forEach((checkbox) => {
+                checkbox.checked = checkbox === selectedCheckbox;
+            });
+        }
+    </script>
+
+{% endblock content %}
