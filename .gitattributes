@@ -1,0 +1,28 @@
+# Python files
+*.py linguist-language=Python
+
+# JavaScript files
+*.js linguist-language=JavaScript
+
+# CSS files
+*.css linguist-language=CSS
+
+# HTML files
+*.html linguist-language=HTML
+
+# Sass files
+*.sass linguist-language=Sass
+*.scss linguist-language=Sass
+
+# jQuery library files (usually JavaScript files, but adding a specific attribute can help)
+jquery*.js linguist-language=JavaScript
+
+# Django templates and settings
+*.html linguist-language=HTML       # Django template files
+*.py linguist-language=Python       # Django Python files
+*.json linguist-language=JSON       # Django settings
+*.po linguist-language=Text         # Django translation files
+
+# Django Allauth specific settings
+*.html linguist-language=HTML       # Allauth templates
+*.py linguist-language=Python       # Allauth Python files
